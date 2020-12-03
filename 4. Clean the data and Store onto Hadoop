@@ -1,0 +1,10 @@
+describe data;
+
+Filtered = foreach data generate (vin, make_name, model_name, price, city, city_fuel_economy, highway_fuel_economy, 
+combine_fuel_economy, listed_date, daysonmarket, dealer_zip, has_accidents, is_new);
+
+-- test the data using a DUMP command
+testfilter = limit Filtered 5;
+DUMP testfilter;
+
+store Filtered into ‘filtered_car_data’ using PigStorage(‘,’);
