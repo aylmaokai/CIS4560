@@ -1,0 +1,6 @@
+ssh atran80@129.150.64.74
+wget https://cis4560.s3.us-east-2.amazonaws.com/archive.zip
+unzip archive.zip
+hdfs dfs -mkdir car
+hdfs dfs -put used_cars_data.csv car/ 
+hdfs dfs -ls car/
