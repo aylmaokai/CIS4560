@@ -1,0 +1,6 @@
+hdfs dfs -ls
+hdfs dfs -ls filtered_car_data.csv
+
+hdfs dfs -cat ./filtered_car_data.csv/part* > filtered_used_cars.csv
+
+scp atran80@129.150.64.74:./filtered_used_cars.csv used_car_data.cs
