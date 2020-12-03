@@ -1,0 +1,28 @@
+hdfs dfs -chmod -R o+w car/
+dfs dfs -ls car/used_cars_data.csv
+beeline
+!connect jdbc:hive2://bigdai-nov-bdcsce-1:2181,bigdai-nov-bdcsce-2:2181,bigdai-nov-bdcsce-3:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2?tez.queue.name=interactive  bdcsce_admin
+use atran80;
+
+DROP TABLE IF EXISTS cardata;
+
+--create table cardata on space-delimited website log data
+CREATE EXTERNAL TABLE IF NOT EXISTS cardata(vin string, back_legroom string, bed string, bed_height string, bed_length string, 
+body_type string, cabin string, city string, city_fuel_economy int, combine_fuel_economy string, daysonmarket int, dealer_zip int, 
+description string, engine_cylinders string, engine_displacement int, engine_type string, exterior_color string, fleet string, 
+frame_damaged string, franchise_dealer string, franchise_make string, front_legroom string, fuel_tank_volume string, fuel_type string, 
+has_accidents string, height string, highway_fuel_economy int, horsepower int, interior_color string, isCab string, is_certified string, 
+is_cpo string, is_new string, is_oemcpo string, latitude int, length string, listed_date date, listing_color string, listing_id string, 
+longitude int, main_picture_url string, major_options string, make_name string, maximum_seating string, mileage int, model_name string, 
+owner_count int, power string, price int, salvage string, savings_amount int, seller_rating int, sp_id string, sp_name string, 
+theft_title string, torque string, transmission string, transmission_display string, trimId string, trim_name string, 
+vehicle_damage_category string, wheel_system string, wheel_system_display string, wheelbase string, width string, year int )
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+STORED AS TEXTFILE LOCATION '/user/atran80/car/'
+TBLPROPERTIES ('skip.header.line.count'='2');
+
+Describe cardata;
+
+-- Test SQL queries to check if data works.
+Select * from caradata limit 10;
+Select make_name, model_name, price from cardata order by price desc limit 10;
